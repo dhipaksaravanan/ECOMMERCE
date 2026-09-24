@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
-
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 temp=os.path.join(BASE_DIR,"templates")
@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-d8v$l(8o&vt9+!m*ni_ibx^fz2nnwlf82!5=5=h##2&j0+rs5*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.onrender.com',]
 
 
 # Application definition
@@ -50,7 +50,8 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',   
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',   
 ]
 
 ROOT_URLCONF = 'Ecommerce.urls' 
@@ -78,14 +79,9 @@ WSGI_APPLICATION = 'Ecommerce.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME':  'ecommerce_db',
-        'HOST':'localhost',
-        'USER':'root',
-        'PASSWORD': '',
-        'PORT':'3306',
-    }
+    'default': dj_database_url.config(
+        default='postgresql://localhost/ecommerce_db'
+    )
 }
 
 
@@ -124,15 +120,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-MEDIA_ROOT = BASE_DIR / 'static'
-MEDIA_URL = '/media/'
-
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
