@@ -1,7 +1,19 @@
-venv/
-env/
+# Python
 __pycache__/
-*.pyc
-db.sqlite3
-.env
+*.py[cod]
+venv/
+.venv/
+env/
+
+# Django
 staticfiles/
+media/
+
+# Environment secrets
+.env
+
+# Local database backups
+*.sql
+
+# IDE
+.vscode/
